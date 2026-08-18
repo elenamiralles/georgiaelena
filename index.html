@@ -7,27 +7,44 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --navy: #1a1a2e;
+      --navy-dark: #16213e;
+      --blue: #3b5bdb;
+      --blue-tint: #eef2ff;
+      --warm: #c8582c;
+      --warm-tint: #fdf1ea;
+      --ink: #222;
+      --muted: #555;
+      --hairline: #e5e5e5;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      color: #222;
+      color: var(--ink);
       background: #fafafa;
       line-height: 1.7;
     }
 
     header {
-      background: #1a1a2e;
+      background: var(--navy);
       color: white;
-      padding: 60px 40px;
+      padding: 56px 40px 44px;
     }
 
     header h1 { font-size: 2.2rem; font-weight: 600; }
-    header p  { margin-top: 8px; opacity: 0.75; font-size: 1.05rem; }
+    header p.role { margin-top: 10px; opacity: 0.85; font-size: 1.08rem; }
+    header p.tagline { margin-top: 6px; opacity: 0.6; font-size: 0.95rem; font-style: italic; }
 
     nav {
-      background: #16213e;
+      background: var(--navy-dark);
       padding: 12px 40px;
       display: flex;
       gap: 24px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     nav a {
@@ -49,10 +66,19 @@
     h2 {
       font-size: 1.3rem;
       font-weight: 600;
-      border-bottom: 2px solid #e0e0e0;
+      border-bottom: 2px solid var(--hairline);
       padding-bottom: 8px;
       margin-bottom: 20px;
-      color: #1a1a2e;
+      color: var(--navy);
+    }
+
+    h2 .accent-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warm);
+      margin-right: 10px;
     }
 
     .about-layout {
@@ -63,16 +89,31 @@
 
     .about-photo {
       flex-shrink: 0;
-      width: 160px;
-      height: 160px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      object-position: center top;
-      border: 3px solid #e0e0e0;
+      object-position: center 30%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 1px var(--hairline);
     }
 
-    .about-text {
-      flex: 1;
+    .about-text { flex: 1; }
+    .about-text p { margin-bottom: 14px; }
+
+    .pull-line {
+      font-size: 1.05rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 16px !important;
+    }
+
+    .signature-line {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--hairline);
+      font-size: 0.92rem;
+      color: var(--muted);
     }
 
     @media (max-width: 560px) {
@@ -85,20 +126,21 @@
 
     .project-card {
       background: white;
-      border: 1px solid #e5e5e5;
+      border: 1px solid var(--hairline);
       border-radius: 8px;
       padding: 20px 24px;
       margin-bottom: 16px;
     }
 
     .project-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
-    .project-card p  { color: #555; font-size: 0.95rem; }
+    .project-card p, .project-card { color: var(--muted); font-size: 0.95rem; }
+    .project-card h3 { color: var(--ink); }
 
     .project-card a {
       display: inline-block;
       margin-top: 10px;
       font-size: 0.9rem;
-      color: #3b5bdb;
+      color: var(--blue);
       text-decoration: none;
     }
 
@@ -112,8 +154,8 @@
     }
 
     .tag {
-      background: #eef2ff;
-      color: #3b5bdb;
+      background: var(--blue-tint);
+      color: var(--blue);
       font-size: 0.8rem;
       padding: 2px 10px;
       border-radius: 20px;
@@ -126,24 +168,95 @@
       color: #999;
     }
 
-    .timeline { border-left: 2px solid #e0e0e0; padding-left: 24px; }
+    .timeline { border-left: 2px solid var(--hairline); padding-left: 24px; }
     .timeline-item { margin-bottom: 24px; position: relative; }
     .timeline-item::before {
       content: '';
       width: 10px; height: 10px;
-      background: #3b5bdb;
+      background: var(--blue);
       border-radius: 50%;
       position: absolute;
       left: -30px; top: 6px;
     }
     .timeline-item .date { font-size: 0.85rem; color: #888; }
+
+    /* Interests section */
+    .interest-block { margin-bottom: 34px; }
+    .interest-block:last-child { margin-bottom: 0; }
+
+    .interest-block h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 12px;
+    }
+
+    .interest-intro {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-item {
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    .gallery-caption {
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 8px 10px;
+    }
+
+    .culture-card {
+      background: var(--warm-tint);
+      border: 1px solid #f1ddce;
+      border-radius: 8px;
+      padding: 18px 22px;
+    }
+
+    .culture-card p { color: #4a3a32; font-size: 0.95rem; margin-bottom: 10px; }
+    .culture-card p:last-child { margin-bottom: 0; }
+
+    .aside-note {
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .barista-note {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Georgia Miralles</h1>
-    <p>M.S. Applied Mathematics · SDSU · Dynamical Systems & Computational Modeling</p>
+    <h1>G. Elena Miralles</h1>
+    <p class="role">Mechanical Engineer &middot; Project &amp; Environmental Engineering</p>
+    <p class="tagline">Builder at heart — on jobsites, on canvas, and on long runs.</p>
   </header>
 
   <nav>
@@ -151,87 +264,86 @@
     <a href="#education">Education</a>
     <a href="#experience">Experience</a>
     <a href="#projects">Projects</a>
+    <a href="#interests">Interests</a>
     <a href="#contact">Contact</a>
   </nav>
 
   <main>
 
     <section id="about">
-      <h2>About</h2>
+      <h2><span class="accent-dot"></span>About</h2>
       <div class="about-layout">
-<img
-  src="/georgiaelena/DSC-0197.jpg"
-  alt="Georgia Miralles"
-  class="about-photo"
-/>
+        <img
+          src="/georgiaelena/DSC-0197.jpg"
+          alt="Georgia Miralles"
+          class="about-photo"
+        />
         <div class="about-text">
-          <p>
-            I'm a first-year M.S. student in Applied Mathematics at San Diego State University,
-            with a B.S. in Mechanical Engineering from Cal Poly SLO. My path into applied math
-            grew directly out of engineering practice: working on air quality compliance at SCS Engineers
-            showed me how much real environmental problems depend on getting the underlying models right,
-            and I wanted the mathematical depth to do that well.
+          <p class="pull-line">
+            I'm a mechanical engineer who likes the kind of work where technical rigor
+            meets people, budgets, and deadlines.
           </p>
-          <p style="margin-top: 12px;">
-            My work now sits at the intersection of dynamical systems, computational PDEs, and
-            scientific computing. I'm especially drawn to problems where physical intuition
-            and rigorous analysis inform each other — whether that's equation discovery from
-            noisy data, environmental transport modeling, or the structure of nonlinear systems.
-            I bring an engineer's instinct for what matters in practice alongside the mathematical
-            tools to dig into why.
+          <p>
+            I earned my B.S. in Mechanical Engineering from
+            <a href="https://me.calpoly.edu/" target="_blank">California Polytechnic State University, San Luis Obispo</a>,
+            where the <em>Learn by Doing</em> philosophy meant building and testing real systems from day one —
+            everything from welding and GD&amp;T to CAD and thermal systems design. That hands-on foundation is
+            still how I approach problems.
+          </p>
+          <p>
+            After graduating I worked in environmental engineering at SCS Engineers, monitoring air quality and
+            managing regulatory compliance data for state agency clients — a role that showed me how much technical
+            decisions matter once they hit a real deadline and a real client. I later added a year of graduate
+            coursework in Applied Mathematics at
+            <a href="https://math.sdsu.edu/programs/masters_mathematics/ms_applied_mathematics_dynamical_systems" target="_blank">San Diego State University</a>
+            (PDEs, numerical methods, dynamical systems), which sharpened how I think about complex systems
+            quantitatively — from soil heat transport to noisy, data-driven modeling.
+          </p>
+          <p>
+            I'm now focused on project engineering and environmental engineering/management roles, where I can bring
+            together technical depth, organization, and the ability to work well with people to get something built,
+            permitted, or delivered.
+          </p>
+          <p class="signature-line">
+            Off the clock: I paint, train for marathons, travel every chance I get, and pull espresso shots on
+            weekends. More on that below.
           </p>
         </div>
       </div>
     </section>
 
     <section id="education">
-      <h2>Education</h2>
+      <h2><span class="accent-dot"></span>Education</h2>
       <div class="timeline">
 
         <div class="timeline-item">
-          <div class="date">2025 – present</div>
-          <div class="date">Expected Matriculation May 2027</div>
-          <h3>M.S. Applied Mathematics — <a href="https://math.sdsu.edu/programs/masters_mathematics/ms_applied_mathematics_dynamical_systems" target="_blank">SDSU</a></h3>
-          <p>Dynamical systems, computational PDEs, scientific computing.</p>
+          <div class="date">2021 – 2025</div>
+          <h3>B.S. Mechanical Engineering — <a href="https://me.calpoly.edu/" target="_blank">California Polytechnic State University, San Luis Obispo</a></h3>
+          <p>Focus on fluid mechanics and applied math. Cal Poly's learn-by-doing curriculum meant building and
+          testing things from day one — an approach that shapes how I work through problems now.</p>
         </div>
 
         <div class="timeline-item">
-          <div class="date">2021–2025</div>
-          <h3>B.S. Mechanical Engineering — <a href="https://me.calpoly.edu/" target="_blank">Cal Poly SLO</a></h3>
-          <p>Focus on fluid mechanics and applied math. Cal Poly's learn-by-doing curriculum
-          meant building and testing things from day one — an approach that shapes how I work
-          through problems now.</p>
+          <div class="date">2025 – 2026</div>
+          <h3>Graduate Coursework, Applied Mathematics — <a href="https://math.sdsu.edu/programs/masters_mathematics/ms_applied_mathematics_dynamical_systems" target="_blank">San Diego State University</a></h3>
+          <p>A year of graduate-level coursework and research in dynamical systems, computational PDEs, and
+          numerical methods, with an emphasis on applications in physical and environmental modeling.</p>
         </div>
 
       </div>
     </section>
 
     <section id="experience">
-      <h2>Experience</h2>
+      <h2><span class="accent-dot"></span>Experience</h2>
       <div class="timeline">
 
         <div class="timeline-item">
-          <div class="date">Sept 2025 – Feb 2026</div>
-          <h3>Graduate Research Assistant — SDSU</h3>
-          <p>Working with Dr. Efstathis Charalampidis building numerical simulations of nonlinear
-          dynamical systems. Analyzing stability and bifurcation structure using MATLAB and Python,
-          with a focus on algorithmic solutions for ODE and PDE systems.</p>
-          <div class="tags">
-            <span class="tag">MATLAB</span>
-            <span class="tag">Python</span>
-            <span class="tag">Dynamical Systems</span>
-            <span class="tag">Numerical Methods</span>
-          </div>
-        </div>
-
-        <div class="timeline-item">
           <div class="date">June 2024 – June 2025</div>
-          <h3>Engineer Intern — SCS Engineers</h3>
+          <h3>Engineer Intern — <a href ="https://www.scsengineers.com/" target="_blank"> SCS Engineers</a></h3>
           <p>Worked on air quality monitoring and regulatory compliance for state agency clients.
           Collected and analyzed large environmental datasets to produce monthly compliance reports,
           and calibrated precision air monitoring instrumentation. This role is where I first saw
-          the limits of standard engineering tools for capturing complex environmental dynamics —
-          and what motivated me to pursue applied mathematics with a focus on environmental modeling.</p>
+          how much rigorous data interpretation matters to real-world environmental engineering outcomes.</p>
           <div class="tags">
             <span class="tag">Environmental Engineering</span>
             <span class="tag">Air Quality</span>
@@ -241,8 +353,23 @@
         </div>
 
         <div class="timeline-item">
+          <div class="date">Sept 2025 – Feb 2026</div>
+          <h3>Graduate Research Assistant — SDSU</h3>
+          <p>Worked with <a href = "https://www.egcharalampidis.com/" target = "_blank"> Dr. Efstathis Charalampidis </a> building
+          numerical simulations of nonlinear systems in MATLAB and Python. Strengthened skills in computational
+          modeling, rigorous problem-solving, and technical documentation — the kind of quantitative toolkit that
+          carries directly into engineering and systems work.</p>
+          <div class="tags">
+            <span class="tag">MATLAB</span>
+            <span class="tag">Python</span>
+            <span class="tag">Computational Modeling</span>
+            <span class="tag">Technical Documentation</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
           <div class="date">June – Sept 2022</div>
-          <h3>Manufacturing Associate — ThermoFisher Scientific</h3>
+          <h3>Manufacturing Associate — <a href="https://jobs.thermofisher.com/global/en/" target="_blank"> ThermoFisher Scientific</a></h3>
           <p>Designed structured workflows for manufacturing processes, built a collaborative
           task-tracking system to improve cross-functional visibility, and managed technical
           documentation and component tracking.</p>
@@ -257,48 +384,17 @@
     </section>
 
     <section id="projects">
-      <h2>Projects</h2>
+      <h2><span class="accent-dot"></span>Projects</h2>
 
       <div class="project-card">
-        <h3>WSINDy for Chaotic Dynamical Systems</h3>
-        Implemented Weak Sparse Identification of Nonlinear Dynamics
-            (<a href="https://arxiv.org/abs/2007.02848" target="_blank">WSINDy</a>)
-            on various dynamical systems to identify and recover governing equations from noisy data.
-            Specifically implemented WSINDy on the Lorenz 63 system, an augmented perturbed Lorenz system,
-            and an Extremum Seeking Control system to explore applications on higher dimensional and
-            slightly perturbed systems. Numerics were done via Python.
-        <div class="tags">
-          <span class="tag">Python</span>
-          <span class="tag">Dynamical Systems</span>
-          <span class="tag">Scientific Computing</span>
-          <span class="tag">Equation Discovery</span>
-        </div>
-        <a href="https://drive.google.com/file/d/1XLS4cSuhWwByAWkprMNbnlLymVmWm8Q3/view?usp=sharing" target="_blank">View Paper</a>
-      </div>
-
-      <div class="project-card">
-        <h3>Terrarium.jl Contribution — Soil Heat Diffusion Example</h3>
-        Contributed a validated 1D soil heat diffusion simulation to an open-source
-        Julia package, verified against an analytical solution with sinusoidal surface forcing.
-        <div class="tags">
-          <span class="tag">Julia</span>
-          <span class="tag">Open Source</span>
-          <span class="tag">Numerical PDEs</span>
-          <span class="tag">Scientific Software</span>
-        </div>
-        <a href="https://github.com/NumericalEarth/Terrarium.jl/pull/103" target="_blank">View on GitHub</a>
-      </div>
-
-      <div class="project-card">
-        <h3>Wind Turbine Rotor Design & Testing</h3>
+        <h3>Wind Turbine Rotor Design &amp; Testing</h3>
         Designed and fabricated a three-bladed wind turbine rotor for competition at the
         Cal Poly Wind Power Research Center. Applied blade element momentum theory to compute
         chord and twist distributions, then manufactured the blades from PVC using heat-forming
         techniques to approximate airfoil camber within tight material and budget constraints.
         The rotor successfully generated measurable power in field testing. The gap between
         predicted and measured performance prompted analysis of blade-to-blade consistency
-        and the aerodynamic cost of fixed pitch — the kind of modeling question that pushed
-        me toward applied mathematics.
+        and the aerodynamic cost of fixed pitch.
         <div class="tags">
           <span class="tag">Aerodynamics</span>
           <span class="tag">BEM Theory</span>
@@ -324,68 +420,124 @@
           <span class="tag">Thermal Systems</span>
           <span class="tag">EES</span>
           <span class="tag">Systems Design</span>
+          <span class="tag">Cost Estimating</span>
         </div>
         <a href="https://drive.google.com/file/d/1gYx86_qcY-IKIMzV3RSgCbaxL--2iKhf/view?usp=sharing" target="_blank">View Project</a>
       </div>
 
       <div class="project-card">
-        <h3>Chaos and Localization Phenomena in the Discrete Nonlinear Schrödinger Lattice</h3>
-        Used the Discrete Nonlinear Schrödinger Lattice to show how a system governed by a simple
-        nonlinear recurrence can generate intricate spatial structures through purely geometric
-        mechanisms. Did so by:
-        <ul style="padding-left: 20px;">
-            <li><p>Recasting the steady state Discrete Nonlinear Schrödinger lattice equation to a 2D map</p></li>
-            <li><p>Analyzing how localized modes, periodic structures, and chaotic spatial patterns arise from invariant manifolds</p></li>
-            <li><p>Examining bright and dark solitons leading to heteroclinic and homoclinic orbits of the map, respectively</p></li>
-            <li><p>Conducting a bifurcation analysis that shows the onset of chaotic behavior.</p></li>
-        </ul>
+        <h3>Terrarium.jl Contribution — Soil Heat Diffusion Example</h3>
+        Contributed a validated 1D soil heat diffusion simulation to an open-source
+        Julia package, verified against an analytical solution with sinusoidal surface forcing.
         <div class="tags">
-          <span class="tag">Bifurcation Analysis</span>
-          <span class="tag">Dynamical Systems</span>
-          <span class="tag">Nonlinear Waves</span>
-          <span class="tag">Chaos Theory</span>
+          <span class="tag">Julia</span>
+          <span class="tag">Open Source</span>
+          <span class="tag">Environmental Modeling</span>
+          <span class="tag">Numerical PDEs</span>
         </div>
-        <a href="https://drive.google.com/file/d/1FdJHyb8VSfyam92I2d4mpJvQQiyho7iD/view?usp=sharing" target="_blank">View Paper</a>
+        <a href="https://github.com/NumericalEarth/Terrarium.jl" target="_blank">View on GitHub</a>
       </div>
 
       <div class="project-card">
-        <h3>Modeling the Impact of Temperature and Rainfall on Dengue Fever Occurences</h3>
-        This project extends an existing temperature-driven dengue transmission model by adding
-        seasonal rainfall effects on mosquito habitat and survival, creating a more complete
-        picture of how climate drives disease spread. Using coupled differential equations,
-        the model simulates mosquito and human infection dynamics, finding that epidemic outbreaks
-        closely follow peaks in rainfall and mosquito abundance. Validated against climate
-        and dengue data from Nepal, the model demonstrates how joint temperature-rainfall variability
-        generates the recurring seasonal epidemic waves observed in real-world dengue transmission.
+        <h3>WSINDy for Chaotic Dynamical Systems</h3>
+        Implemented Weak Sparse Identification of Nonlinear Dynamics
+        (<a href="https://arxiv.org/abs/2007.02848" target="_blank">WSINDy</a>)
+        on several dynamical systems, including the Lorenz 63 system, to recover governing
+        equations directly from noisy data — a data-driven modeling method with a Python implementation.
         <div class="tags">
-          <span class="tag">Mathematical Modeling</span>
-          <span class="tag">ODEs</span>
-          <span class="tag">Data Validation</span>
-          <span class="tag">Epidemiology</span>
+          <span class="tag">Python</span>
+          <span class="tag">Data-Driven Modeling</span>
+          <span class="tag">Scientific Computing</span>
         </div>
-        <a href="https://drive.google.com/file/d/13Pkieav3C6YVkcFKs71XfBZukWoNx840/view?usp=sharing" target="_blank">View Paper</a>
+        <a href="https://drive.google.com/file/d/1XLS4cSuhWwByAWkprMNbnlLymVmWm8Q3/view?usp=sharing" target="_blank">View Paper</a>
       </div>
 
-      <div class="project-card">
-        <h3>ODE Analysis of Odell's 1980 Predator Prey Model</h3>
-        Analyzed the Odell predator-prey model from Strogatz's Nonlinear Dynamics and Chaos using qualitative
-        phase-plane methods, focusing on nullclines, equilibrium stability, and how system behavior
-        shifts with a parameter. Analytically, the model predicts transcritical and Hopf bifurcations.
-        These transitions are illustrated through numerical phase portraits, time series, and
-        trajectory plots.
-        <div class="tags">
-          <span class="tag">Phase Plane Analysis</span>
-          <span class="tag">Bifurcation Theory</span>
-          <span class="tag">ODEs</span>
-          <span class="tag">Numerical Simulation</span>
+    </section>
+
+    <section id="interests">
+      <h2><span class="accent-dot"></span>Interests</h2>
+      <p class="interest-intro">
+        Outside of engineering, you'll usually find me with a paintbrush, running shoes, a boarding
+        pass, or a portafilter in hand.
+      </p>
+
+      <div class="interest-block">
+        <h3>Painting</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-surfer-sunset.jpg" alt="Acrylic painting of a surfer silhouetted against a sunset" loading="lazy" />
+            <div class="gallery-caption">Surfer at sunset, acrylic</div>
+          </div>
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-coastal-bluffs.jpg" alt="Painting of coastal bluffs and ocean" loading="lazy" />
+            <div class="gallery-caption">Coastal bluffs, acrylic</div>
+          </div>
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-backyard-pool.jpg" alt="Painting of a backyard pool and garden" loading="lazy" />
+            <div class="gallery-caption">Backyard pool, acrylic</div>
+          </div>
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-8ball-series.jpg" alt="Two acrylic paintings styled after billiard balls" loading="lazy" />
+            <div class="gallery-caption">8-ball series, acrylic</div>
+          </div>
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-painted-surfboard.jpg" alt="Hand-painted surfboard" loading="lazy" />
+            <div class="gallery-caption">Hand-painted surfboard</div>
+          </div>
+          <div class="gallery-item">
+            <img src="/georgiaelena/art-sketch-studies.jpg" alt="Sketches and color studies" loading="lazy" />
+            <div class="gallery-caption">Sketches &amp; color studies</div>
+          </div>
         </div>
-        <a href="https://drive.google.com/file/d/1u8nVjCkxOzordriWHmHEI_iIkBwiPdsJ/view?usp=sharing" target="_blank">View Project</a>
+      </div>
+
+      <div class="interest-block">
+        <h3>Running</h3>
+        <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 220px));">
+          <div class="gallery-item">
+            <img src="/georgiaelena/marathon-finish.jpg" alt="At the finish line of a marathon" loading="lazy" />
+            <div class="gallery-caption">Finish line — one of several marathons</div>
+          </div>
+        </div>
+        <p class="aside-note">Currently training for the next one.</p>
+      </div>
+
+      <div class="interest-block">
+        <h3>Travel</h3>
+        <p class="interest-intro" style="margin-bottom: 6px;">
+          I travel every chance I get, often self-planned door to door — including coordinating group
+          logistics and budgets. Most recently I completed the Tour du Mont Blanc, a multi-day trek
+          through France, Italy, and Switzerland that took a fair amount of planning to pull off.
+        </p>
+        <!-- TODO: drop travel photos here as gallery-item blocks, same pattern as the Painting gallery above -->
+      </div>
+
+      <div class="interest-block">
+        <h3>Culture &amp; Languages</h3>
+        <div class="culture-card">
+          <p>
+            I grew up attending a French-American school through 8th grade and am fluent in French,
+            and my father is Argentine, which means I grew up speaking Spanish at home and traveling
+            regularly to Argentina. Between the two, I'm comfortable working and communicating across
+            languages and cultures — and I hold a Spanish residency visa granting work authorization
+            in the EU.
+          </p>
+        </div>
+      </div>
+
+      <div class="interest-block">
+        <h3>Also...</h3>
+        <p class="barista-note">
+          I work as a barista on weekends — it keeps me organized and people-facing outside of
+          engineering, and there's a decent amount of overlap between running a smooth bar during a
+          Saturday rush and running a smooth jobsite.
+        </p>
       </div>
 
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
+      <h2><span class="accent-dot"></span>Contact</h2>
       <p>Email: <a href="mailto:g.elena.miralles@gmail.com">g.elena.miralles@gmail.com</a></p>
       <p>GitHub: <a href="https://github.com/elenamiralles" target="_blank">github.com/elenamiralles</a></p>
       <p>LinkedIn: <a href="https://www.linkedin.com/in/georgiaelenamiralles" target="_blank">linkedin.com/in/georgiaelenamiralles</a></p>
@@ -394,7 +546,7 @@
   </main>
 
   <footer>
-    <p>Georgia Miralles · Built with GitHub Pages</p>
+    <p>Georgia Miralles &middot; Built with GitHub Pages</p>
   </footer>
 
 </body>
